@@ -118,7 +118,7 @@ void countTransiton(motif_count& MC, transition& TR, int base, double& new_ratio
         new_edge += medge * c;
         N_motifs += c;
         vector<timestamp> T = it->second.second;
-        double lambda = 1 / accumulate(T.begin(), T.end(), 0.0)/ T.size();
+        double lambda = 1 / (accumulate(T.begin(), T.end(), 0.0)/ T.size());
         TR[code_0].push_back(make_tuple(code_1, c, lambda));
     }
     new_ratio = new_edge / base;
@@ -223,7 +223,7 @@ void generateGraph(transition TR, vector<event> IE, set<vertex> V, int Max_event
                 u_new = nodes[n1];
                 v_new = nodes[n2];
             }
-            poisson_distribution<> P(lambda);
+            exponential_distribution<> P(lambda);
             timestamp delta_t = P(generator);
             t+=delta_t;
             event new_e = make_pair(t, make_pair(u_new, v_new));
